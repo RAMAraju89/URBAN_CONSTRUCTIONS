@@ -1,14 +1,12 @@
-name: app_environment
-channels:
-  - snowflake
-dependencies:
-  - joblib=1.4.2
-  - plotly=5.24.1
-  - python=3.8.*
-  - sklearn-pandas=2.2.0
-  - sklearn-som=1.1.0
-  - snowflake=1.0.0
-  - snowflake-snowpark-python=*
-  - streamlit=
-  - tune-sklearn=0.4.6
+#requirements.txt
+snowflake
+joblib=1.4.2
+plotly=5.24.1
+python=3.8.*
+sklearn-pandas=2.2.0
+sklearn-som=1.1.0
+snowflake=1.0.0
+snowflake-snowpark-python
+streamlit
+tune-sklearn=0.4.6
 
