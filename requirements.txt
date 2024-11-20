@@ -2,7 +2,7 @@
 snowflake
 joblib==1.4.2
 plotly==5.24.1
-python==3.8.*
+python==3.12
 sklearn-pandas==2.2.0
 sklearn-som==1.1.0
 snowflake==1.0.0
