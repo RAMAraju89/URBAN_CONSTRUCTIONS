@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import matplotlib
-matplotlib.use("Agg")  # Set backend before importing pyplot or Streamlit
+import matplotlib.use("Agg")  # Set backend before importing pyplot or Streamlit
 import matplotlib.pyplot as plt
 
 import streamlit as st
