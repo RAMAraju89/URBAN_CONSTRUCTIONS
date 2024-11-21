@@ -8,5 +8,4 @@ sklearn-pandas==2.2.0
 sklearn-som==1.1.0
 numpy>=1.21.0
 pip install --no-cache-dir -r requirements.txt
-
 requests
