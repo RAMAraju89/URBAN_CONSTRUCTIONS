@@ -1,6 +1,3 @@
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
 import requests
 import pandas as pd
 import numpy as np
@@ -12,8 +9,6 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # Rest of your Streamlit app code
-
-import matplotlib.pyplot as plt
 import seaborn as sns
 import altair as alt
 from snowflake.snowpark.functions import col
