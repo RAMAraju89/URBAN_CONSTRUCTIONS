@@ -3,6 +3,8 @@ import requests
 import pandas as pd
 import numpy as np
 import pickle
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
 import altair as alt
