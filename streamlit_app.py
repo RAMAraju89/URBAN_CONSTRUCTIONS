@@ -16,7 +16,6 @@ from matplotlib.colors import Colormap, is_color_like
 from matplotlib import _api, _cm, cbook, scale
 from matplotlib import transforms as mtransforms
 from . import _api, _version, cbook, _docstring, rcsetup
-from matplotlib._path 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
