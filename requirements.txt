@@ -1,9 +1,12 @@
 # requirements.txt
 snowflake-snowpark-python
 streamlit
+numpy>=1.21.0
 matplotlib==3.7.2
 seaborn==0.13.2
 sklearn-pandas==2.2.0
 sklearn-som==1.1.0
 numpy>=1.21.0
+pip install --no-cache-dir -r requirements.txt
+
 requests
