@@ -1,10 +1,15 @@
-import streamlit as st
 import requests
 import pandas as pd
 import numpy as np
 import pickle
 import matplotlib
-matplotlib.use("Agg")
+matplotlib.use("Agg")  # Set backend before importing pyplot or Streamlit
+import matplotlib.pyplot as plt
+
+import streamlit as st
+
+# Rest of your Streamlit app code
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import altair as alt
