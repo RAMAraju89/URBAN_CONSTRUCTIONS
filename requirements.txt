@@ -1,10 +1,4 @@
-#requirements.txt
-snowflake
+# requirements.txt
 snowflake-snowpark-python
 streamlit
-matplotlib==3.7.2
-python==3.8.*
-seaborn==0.13.2
-sklearn-pandas==2.2.0
-sklearn-som==1.1.0
 requests
