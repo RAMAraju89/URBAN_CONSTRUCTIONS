@@ -6,7 +6,4 @@ matplotlib==3.7.2
 seaborn==0.13.2
 sklearn-pandas==2.2.0
 sklearn-som==1.1.0
-pip uninstall matplotlib numpy -y
-pip install --no-cache-dir numpy matplotlib
-
 requests
