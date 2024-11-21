@@ -1,19 +1,19 @@
 import streamlit as st
+import requests
 import pandas as pd
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 import altair as alt
-from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
 
 # Get the current Snowflake session
-session = get_active_session()
-
+cnx = st.connection("snowflake")
+session =cnx.session()
 # Fetch the data from Snowflake
 snowflake_df = session.table("URBAN_CONSTRUCTION_DATA")
 
