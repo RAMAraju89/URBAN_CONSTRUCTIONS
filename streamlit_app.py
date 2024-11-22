@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import numpy as np
+#import numpy as np
 import pickle
 import matplotlib
 import matplotlib.pyplot as plt
