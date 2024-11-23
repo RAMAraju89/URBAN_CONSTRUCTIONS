@@ -19,9 +19,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
 
-# Get the current Snowflake session
-cnx = st.connection("snowflake")
-session =cnx.session()
+conn = st.connection("snowflake")
+
+@st.cache_data
+def load_table():
+    session = conn.session()
+    return session.table("URBAN_CONSTRUCTION_DB.CONSTRUCTION_PROJECTS.URBAN_CONSTRUCTION_DATA").to_pandas()
+
+df = load_table()
+
+for row in df.itertuples():
+    st.write(f"{row.NAME} has a :{row.PET}:")
 # Fetch the data from Snowflake
 snowflake_df = session.table("URBAN_CONSTRUCTION_DATA")
 
