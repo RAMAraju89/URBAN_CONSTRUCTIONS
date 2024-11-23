@@ -1,7 +1,7 @@
 # requirements.txt
 snowflake-snowpark-python
 streamlit
-python==3.8.*
+python=3.8.*
 plotly==5.24.1
 matplotlib==3.7.2
 seaborn==0.13.2
