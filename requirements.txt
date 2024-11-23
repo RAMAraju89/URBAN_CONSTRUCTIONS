@@ -1,6 +1,6 @@
 # requirements.txt
-snowflake-snowpark-python
-streamlit
+snowflake-snowpark-python==1.25.0
+streamlit==1.40.1
 python==3.9
 plotly==5.24.1
 matplotlib==3.7.2
