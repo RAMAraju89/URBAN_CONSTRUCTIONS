@@ -18,8 +18,8 @@ def load_table():
 
 df = load_table()
 
-for row in df.itertuples():
-    st.write(f"{row.NAME} has a :{row.PET}:")
+# for row in df.itertuples():
+#     st.write(f"{row.NAME} has a :{row.PET}:")
 # Fetch the data from Snowflake
 snowflake_df = session.table("URBAN_CONSTRUCTION_DATA")
 
