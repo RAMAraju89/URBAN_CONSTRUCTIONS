@@ -1,32 +1,16 @@
 import requests
+import streamlit as st
 import pandas as pd
-#import numpy as np
+import numpy as np
 import pickle
 import matplotlib.pyplot as plt
-
-import streamlit as st
-
-# Rest of your Streamlit app code
 import seaborn as sns
-import altair as alt
+from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
-from matplotlib.colors import Colormap, is_color_like
-from matplotlib import _api, _cm, cbook, scale
-from matplotlib import transforms as mtransforms
-from . import _api, _version, cbook, _docstring, rcsetup
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
-
 conn = st.connection("snowflake")
-
-
-
-# Access secrets
-st.write("DB Username:", st.secrets["db_username"])
-st.write("DB Password:", st.secrets["db_password"])
-st.write("API Key:", st.secrets["custom_secrets"]["api_key"])
-
 
 @st.cache_data
 def load_table():
