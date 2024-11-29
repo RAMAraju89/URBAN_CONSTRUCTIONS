@@ -7,7 +7,7 @@ python==3.8.*
 seaborn==0.13.2
 sklearn-pandas==2.2.0
 sklearn-som==1.1.0
-snowflake-snowpark-python=
+snowflake-snowpark-python
 streamlit
 requests
 
