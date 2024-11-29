@@ -5,6 +5,7 @@ numpy
 matplotlib
 seaborn
 scikit-learn
+pickle
 snowflake-snowpark-python
 requests
 
