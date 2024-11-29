@@ -1,6 +1,6 @@
 # requirements.txt
-matplotlib==3.7.2
-matplotlib-base==3.7.2
+matplotlib
+matplotlib-base
 matplotlib-inline==0.1.6
 plotly==5.24.1
 python==3.8.*
