@@ -19,14 +19,6 @@ def load_table():
 
 df = load_table()
 
-# for row in df.itertuples():
-#     st.write(f"{row.NAME} has a :{row.PET}:")
-# Fetch the data from Snowflake
-#snowflake_df = session.table("URBAN_CONSTRUCTION_DATA")
-
-# Convert Snowpark DataFrame to Pandas DataFrame for use in Streamlit
-#df = snowflake_df.to_pandas()
-
 # Display the data in Streamlit
 st.title("Urban Construction Safety and Compliance Dashboard")
 st.write(
@@ -108,7 +100,7 @@ for target_name, Y in {'Y1': Y1, 'Y2': Y2, 'Y3': Y3, 'Y4': Y4, 'Y5': Y5}.items()
     model.fit(X_train, Y_train)
 
     # Save the model
-    model_filename = f"{target_name}_model.pkl.gz"
+    model_filename = f"{target_name}_model.pkl"
     with open(model_filename, 'wb') as file:
         pickle.dump(model, file)
 
@@ -147,40 +139,30 @@ model_paths = {
 user_inputs = {col: st.number_input(col, min_value=0) for col in X.columns}
 input_array = np.array([list(user_inputs.values())])
 
+# Add condition to predict only when button is pressed
 if st.button("Predict All"):
     predictions = {}
     for target_name, model in models.items():
         predictions[target_name] = model.predict(input_array)[0]
-    
+        
+    # Function to plot predictions
+    def plot_predictions(predictions):
+        labels = ['Y1_Project_Approval', 'Y2_Safety_Compliance', 'Y3_EHS_Adherence', 'Y4_Recycling_Practices', 'Y5_Eco_Friendly_Materials']
+        plt.figure(figsize=(15, 6))
+        sns.barplot(x=labels, y=predictions, palette='Blues_d')
+        plt.title('Predictions for Safety and Compliance Metrics')
+        plt.xlabel('Metrics')
+        plt.ylabel('Prediction Value')
+        plt.ylim(0, 1)
+        st.pyplot(plt)
 
-
-
-# Function to plot predictions
-def plot_predictions(predictions):
+    # Collect predictions for each target
+    predictions_values = []
     labels = ['Y1_Project_Approval', 'Y2_Safety_Compliance', 'Y3_EHS_Adherence', 'Y4_Recycling_Practices', 'Y5_Eco_Friendly_Materials']
-    plt.figure(figsize=(15, 6))
-    sns.barplot(x=labels, y=predictions, palette='Blues_d')
-    plt.title('Predictions for Safety and Compliance Metrics')
-    plt.xlabel('Metrics')
-    plt.ylabel('Prediction Value')
-    plt.ylim(0, 1)
-    st.pyplot(plt)
-
-# # Prepare prediction values
-predictions = []
-
-
-labels = ['Y1_Project_Approval', 'Y2_Safety_Compliance', 'Y3_EHS_Adherence', 'Y4_Recycling_Practices', 'Y5_Eco_Friendly_Materials']
-i=0
-
-# Collect predictions for each target
-for target_name, model in models.items():
-    #if st.button(f"Predict {target_name}"):
-        prediction = model.predict(input_array)
-        predictions.append(prediction[0])  # Append the prediction result to the list
-        st.write(f"{labels[i]} Prediction: {prediction[0]}")
-        i=i+1
-
-# Plot the predictions if they are available
-if predictions:
-    plot_predictions(predictions)
+    for i, (target_name, prediction) in enumerate(predictions.items()):
+        predictions_values.append(prediction)
+        st.write(f"{labels[i]} Prediction: {prediction}")
+        
+    # Plot the predictions if they are available
+    if predictions_values:
+        plot_predictions(predictions_values)
