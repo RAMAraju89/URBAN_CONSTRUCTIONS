@@ -2,7 +2,6 @@ import requests
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 from snowflake.snowpark.context import get_active_session
@@ -147,16 +146,11 @@ model_paths = {
 user_inputs = {col: st.number_input(col, min_value=0) for col in X.columns}
 input_array = np.array([list(user_inputs.values())])
 
-for target_name, model in models.items():
-    if st.button(f"Predict {target_name}"):
-        prediction = model.predict(input_array)
-        st.write(f"{target_name} Prediction: {prediction[0]}")
-
-
-
-
-
-
+if st.button("Predict All"):
+    predictions = {}
+    for target_name, model in models.items():
+        predictions[target_name] = model.predict(input_array)[0]
+    
 
 
 
@@ -174,124 +168,18 @@ def plot_predictions(predictions):
 # # Prepare prediction values
 predictions = []
 
+
+labels = ['Y1_Project_Approval', 'Y2_Safety_Compliance', 'Y3_EHS_Adherence', 'Y4_Recycling_Practices', 'Y5_Eco_Friendly_Materials']
+i=0
+
 # Collect predictions for each target
 for target_name, model in models.items():
     #if st.button(f"Predict {target_name}"):
         prediction = model.predict(input_array)
         predictions.append(prediction[0])  # Append the prediction result to the list
-        st.write(f"{target_name} Prediction: {prediction[0]}")
+        st.write(f"{labels[i]} Prediction: {prediction[0]}")
+        i=i+1
 
 # Plot the predictions if they are available
 if predictions:
     plot_predictions(predictions)
-
-
-
-
-
-
-
-
-# Extract relevant columns for comparison
-comparison_columns = {
-    "1000+ Population Habitations Covered": [
-        "Habitations with 1000+ Population - Habitations Covered (No.s) - Achievement",
-        "Habitations with 1000+ Population - Habitations Covered (No.s) - Target"
-    ],
-    "500+ Population Habitations Covered": [
-        "Habitations with 500+ Population - Habitations Covered (No.) - Achievement",
-        "Habitations with 500+ Population - Habitations Covered (No.) - Target"
-    ],
-    "1000+ Population Road Length (KM)": [
-        "Habitations with 1000+ Population - Length (KM) - Achievement",
-        "Habitations with 1000+ Population - Length (KM) - Target"
-    ],
-    "500+ Population Road Length (KM)": [
-        "Habitations with 500+ Population - Length (KM) - Achievement",
-        "Habitations with 500+ Population - Length (KM) - Target"
-    ]
-}
-
-# Prepare a long-format DataFrame for charting
-chart_data = []
-for category, cols in comparison_columns.items():
-    for row in df.index:
-        chart_data.append({
-            "Category": category,
-            "Type": "Achievement",
-            "Value": df.loc[row, cols[0]]
-        })
-        chart_data.append({
-            "Category": category,
-            "Type": "Target",
-            "Value": df.loc[row, cols[1]]
-        })
-
-chart_df = pd.DataFrame(chart_data)
-
-# Altair bar chart comparing achievements vs targets
-chart = alt.Chart(chart_df).mark_bar().encode(
-    x=alt.X('Category:N', title='Category'),
-    y=alt.Y('Value:Q', title='Values'),
-    color='Type:N',
-    column=alt.Column('Type:N', title='Comparison', spacing=10)
-).properties(
-    title='Actual vs Target Values for Y1 (Project Approval)',
-    width=150,
-    height=300
-)
-
-# Display the chart
-st.subheader("Insight: Y1 (Project Approval) - Actual vs Target Comparison")
-st.altair_chart(chart, use_container_width=True)
-
-
-
-
-
-
-
-# Calculate compliance percentage for Y3
-total_projects = len(df)
-compliant_projects = df['Y3_EHS_Adherence'].sum()
-non_compliant_projects = total_projects - compliant_projects
-
-# Calculate percentages
-compliance_data = {
-    "Category": ["Compliant", "Non-Compliant"],
-    "Count": [compliant_projects, non_compliant_projects],
-    "Percentage": [
-        (compliant_projects / total_projects) * 100,
-        (non_compliant_projects / total_projects) * 100
-    ]
-}
-
-compliance_df = pd.DataFrame(compliance_data)
-
-# Visualization: Pie chart for percentage compliance
-st.subheader("Insight: Y3 (EHS Standards) - Compliance Analysis")
-
-st.write(
-    "This visualization shows the percentage of projects adhering to environmental, health, and safety (EHS) standards. "
-    "Projects that consistently utilize quality materials and undergo state-level inspections tend to comply with these standards."
-)
-
-# Option 1: Bar Chart
-st.bar_chart(compliance_df.set_index("Category")["Count"], use_container_width=True)
-
-# Option 2: Altair Pie Chart
-import altair as alt
-
-pie_chart = alt.Chart(compliance_df).mark_arc(innerRadius=50).encode(
-    theta=alt.Theta(field="Count", type="quantitative", title="Projects"),
-    color=alt.Color(field="Category", type="nominal", title="Compliance Status"),
-    tooltip=["Category", "Count", alt.Tooltip("Percentage:Q", format=".1f")]
-).properties(
-    title="Y3 (EHS Standards) Compliance Breakdown"
-)
-
-# Render the chart
-st.altair_chart(pie_chart, use_container_width=True)
-
-
-
