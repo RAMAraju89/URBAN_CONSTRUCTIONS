@@ -21,10 +21,10 @@ df = load_table()
 # for row in df.itertuples():
 #     st.write(f"{row.NAME} has a :{row.PET}:")
 # Fetch the data from Snowflake
-snowflake_df = session.table("URBAN_CONSTRUCTION_DATA")
+#snowflake_df = session.table("URBAN_CONSTRUCTION_DATA")
 
 # Convert Snowpark DataFrame to Pandas DataFrame for use in Streamlit
-df = snowflake_df.to_pandas()
+#df = snowflake_df.to_pandas()
 
 # Display the data in Streamlit
 st.title("Urban Construction Safety and Compliance Dashboard")
