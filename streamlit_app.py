@@ -166,3 +166,38 @@ if st.button("Predict All"):
     # Plot the predictions if they are available
     if predictions_values:
         plot_predictions(predictions_values)
+
+
+
+
+import base64
+
+# Function to set background image
+def set_background_image(image_file):
+    with open(image_file, "rb") as file:
+        encoded_image = base64.b64encode(file.read()).decode()
+    css = f"""
+    <style>
+    .stApp {{
+        background-image: url('data:image/jpg;base64,{encoded_image}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+
+# Streamlit App
+def main():
+    # Set background image
+    set_background_image("urban-construction bgi.jpg")
+    
+    # App content
+    st.title("Welcome to the Construction Dashboard")
+    st.write("This app showcases a background image in Streamlit.")
+    st.button("Click Me")
+
+if __name__ == "__main__":
+    main()
+
