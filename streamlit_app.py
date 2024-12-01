@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
+import base64
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 from sklearn.model_selection import train_test_split
@@ -170,29 +171,61 @@ if st.button("Predict All"):
 
 
 
-import base64
+
+
+
+
+
+
+
+
+# Function to download file from Snowflake stage
+def download_image_from_snowflake(session, stage_path, local_filename):
+    try:
+        # Retrieve the file from the Snowflake stage
+        session.file.get(stage_path, f"./{local_filename}")
+        st.success(f"File downloaded successfully: {local_filename}")
+        return local_filename
+    except Exception as e:
+        st.error(f"Error downloading image from Snowflake: {e}")
+        return None
 
 # Function to set background image
 def set_background_image(image_file):
-    with open(image_file, "rb") as file:
-        encoded_image = base64.b64encode(file.read()).decode()
-    css = f"""
-    <style>
-    .stApp {{
-        background-image: url('data:image/jpg;base64,{encoded_image}');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    </style>
-    """
-    st.markdown(css, unsafe_allow_html=True)
+    try:
+        with open(image_file, "rb") as file:
+            encoded_image = base64.b64encode(file.read()).decode()
+        css = f"""
+        <style>
+        .stApp {{
+            background-image: url('data:image/jpg;base64,{encoded_image}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error setting background image: {e}")
 
 # Streamlit App
 def main():
-    # Set background image
-    set_background_image("urban-construction bgi.jpg")
-    
+    # Establish connection to Snowflake
+    conn = st.connection("snowflake")
+    session = conn.session()
+
+    # Define Snowflake stage path for the background image
+    snowflake_stage_path = '@"URBAN_CONSTRUCTION_DB"."CONSTRUCTION_PROJECTS"."IMAGES"/urban-construction-bgi.jpg'
+    local_filename = "urban-construction-bgi.jpg"
+
+    # Download the image from Snowflake stage
+    image_file = download_image_from_snowflake(session, snowflake_stage_path, local_filename)
+
+    # Set the background image if download was successful
+    if image_file:
+        set_background_image(image_file)
+
     # App content
     st.title("Welcome to the Construction Dashboard")
     st.write("This app showcases a background image in Streamlit.")
@@ -200,4 +233,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
