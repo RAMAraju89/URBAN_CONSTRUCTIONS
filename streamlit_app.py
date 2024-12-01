@@ -5,7 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
-import base64
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 from sklearn.model_selection import train_test_split
