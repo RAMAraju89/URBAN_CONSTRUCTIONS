@@ -212,8 +212,8 @@ def set_background_image(image_file):
 # Streamlit App
 def main():
     # Establish connection to Snowflake
-    conn = st.connection("snowflake")
-    session = conn.session()
+    
+    
 
     # Define Snowflake stage path for the background image
     snowflake_stage_path = '@"URBAN_CONSTRUCTION_DB"."CONSTRUCTION_PROJECTS"."BGI"/urban-construction bgi.jpg'
