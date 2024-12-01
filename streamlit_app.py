@@ -136,7 +136,7 @@ model_paths = {
 }
 
 # Prepare for predictions when button is pressed
-user_inputs = {col: st.number_input(col, min_value=0) for col in X.columns}
+user_inputs = {col: st.number_input(col, min_value=0.0) for col in X.columns}
 input_array = np.array([list(user_inputs.values())])
 
 # Add condition to predict only when button is pressed
