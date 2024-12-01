@@ -217,7 +217,7 @@ def main():
 
     # Define Snowflake stage path for the background image
     snowflake_stage_path = '@"URBAN_CONSTRUCTION_DB"."CONSTRUCTION_PROJECTS"."BGI"/urban-construction bgi.jpg'
-    local_filename = "urban-construction-bgi.jpg"
+    local_filename = "urban-construction bgi.jpg"
 
     # Download the image from Snowflake stage
     image_file = download_image_from_snowflake(session, snowflake_stage_path, local_filename)
