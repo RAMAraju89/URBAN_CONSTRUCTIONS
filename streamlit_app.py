@@ -241,7 +241,7 @@ def set_background_image(image_file):
 # Main Streamlit app
 def main():
     # Download the image from Snowflake stage
-    stage_path = '@"URBAN_CONSTRUCTION_DB"."CONSTRUCTION_PROJECTS"."URBAN_CONSTRUCTION_IMAGES"/urban-construction-bgi.jpg'
+    stage_path = '@"URBAN_CONSTRUCTION_DB"."CONSTRUCTION_PROJECTS"."BGI"/urban-construction bgi.jpg'
     local_file_name = "urban-construction-bgi.jpg"
     image_file = download_image_from_stage(stage_path, local_file_name)
 
